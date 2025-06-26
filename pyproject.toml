@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "monocle"
+version = "0.1.0"
+description = ""
+authors = ["widkit <exylloath@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
