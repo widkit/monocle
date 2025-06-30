@@ -6,7 +6,10 @@ authors = ["widkit <exylloath@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.13"
+python = ">=3.13,<3.14"
+pyside6 = "^6.9.1"
+pytablericons = "^1.0.1"
+pillow = "^11.2.1"
 
 
 [build-system]
