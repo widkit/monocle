@@ -33,18 +33,17 @@ class MyWidget(QtWidgets.QWidget):
     def magic(self):
         self.text.setText(random.choice(self.hello))
 
-if __name__ == "__main__":
-    app = QtWidgets.QApplication([])
+app = QtWidgets.QApplication([])
 
-    primaryScreen = app.primaryScreen()
-    screenGeometry = primaryScreen.geometry()
-    screenPixelRatio = primaryScreen.devicePixelRatio()
+primaryScreen = app.primaryScreen()
+screenGeometry = primaryScreen.geometry()
+screenPixelRatio = primaryScreen.devicePixelRatio()
 
-    screenWidth = int(screenGeometry.width() * screenPixelRatio)
-    screenHeight = int(screenGeometry.height() * screenPixelRatio)
+screenWidth = int(screenGeometry.width() * screenPixelRatio)
+screenHeight = int(screenGeometry.height() * screenPixelRatio)
 
-    widget = MyWidget()
-    widget.resize(screenWidth, screenHeight)
-    widget.show()
+widget = MyWidget()
+widget.resize(screenWidth, screenHeight)
+widget.show()
 
-    sys.exit(app.exec())
+sys.exit(app.exec())
