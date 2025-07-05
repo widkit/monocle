@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Run Monocle",
+            "type": "python",
+            "request": "launch",
+            "module": "monocle.main", 
+            "cwd": "${workspaceFolder}",         
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "env": {
+
+            }
+        }
+    ]
+}
