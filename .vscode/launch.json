@@ -3,7 +3,7 @@
     "configurations": [
         {
             "name": "Python: Run Monocle",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
             "module": "monocle.main", 
             "cwd": "${workspaceFolder}",         
