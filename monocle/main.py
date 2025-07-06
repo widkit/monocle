@@ -1,6 +1,6 @@
-from .ui.app import create_and_run_app
+from .ui.app import runApp
 import sys
 
 if __name__ == "__main__":
-    sys.exit(create_and_run_app())
+    sys.exit(runApp())
 
