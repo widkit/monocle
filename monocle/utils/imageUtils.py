@@ -14,9 +14,9 @@ def grabScreen(screen=None):
     screenshot = screen.grabWindow(0)
     
     # Create a temporary file for the screenshot
-    temp_file = tempfile.NamedTemporaryFile(suffix='.png', delete=False)
-    temp_filename = temp_file.name
-    temp_file.close()
+    tempFile = tempfile.NamedTemporaryFile(suffix='.png', delete=False)
+    tempFilename = tempFile.name
+    tempFile.close()
     
-    screenshot.save(temp_filename, "png")
-    return temp_filename
+    screenshot.save(tempFilename, "png")
+    return tempFilename

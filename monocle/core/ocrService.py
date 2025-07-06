@@ -20,19 +20,19 @@ def imgToBoxData(image_path, min_confidence=30):
     word_data_list = []
     
     # Strategy 1: Standard OCR with enhanced configuration
-    word_data_list.extend(_ocr_with_config(img_pil, min_confidence, "standard"))
+    word_data_list.extend(ocrConf(img_pil, min_confidence, "standard"))
     
     # Strategy 2: OCR with image preprocessing (enhance contrast)
-    enhanced_img = _preprocess_image(img_pil)
-    word_data_list.extend(_ocr_with_config(enhanced_img, min_confidence, "enhanced"))
+    enhanced_img = preprocessImg(img_pil)
+    word_data_list.extend(ocrConf(enhanced_img, min_confidence, "enhanced"))
     
     # Strategy 3: OCR with different PSM modes for different text layouts
-    word_data_list.extend(_ocr_with_psm_modes(img_pil, min_confidence))
+    word_data_list.extend(ocrPSM(img_pil, min_confidence))
     
     # Remove duplicates and merge overlapping boxes
-    return _merge_duplicate_boxes(word_data_list)
+    return mergeDuplicateBoxes(word_data_list)
 
-def _preprocess_image(img):
+def preprocessImg(img):
     """Preprocess image to improve OCR accuracy"""
     # Enhance contrast
     enhancer = ImageEnhance.Contrast(img)
@@ -47,7 +47,7 @@ def _preprocess_image(img):
     
     return img
 
-def _ocr_with_config(img, min_confidence, strategy_name):
+def ocrConf(img, min_confidence, strategy_name):
     """Run OCR with specific configuration"""
     try:
         if strategy_name == "standard":
@@ -58,7 +58,7 @@ def _ocr_with_config(img, min_confidence, strategy_name):
             config = '--oem 3 --psm 6'
             
         data = pytesseract.image_to_data(img, output_type=Output.DICT, config=config)
-        return _extract_word_data(data, min_confidence)
+        return extractWord(data, min_confidence)
         
     except pytesseract.TesseractNotFoundError:
         print("Error: Tesseract is not installed or not in your PATH.")
@@ -68,7 +68,7 @@ def _ocr_with_config(img, min_confidence, strategy_name):
         print(f"Error during Tesseract OCR ({strategy_name}): {e}")
         return []
 
-def _ocr_with_psm_modes(img, min_confidence):
+def ocrPSM(img, min_confidence):
     """Try different PSM modes for better text detection"""
     word_data_list = []
     psm_modes = [3, 4, 6, 8, 11, 12]  # Different page segmentation modes
@@ -77,14 +77,14 @@ def _ocr_with_psm_modes(img, min_confidence):
         try:
             config = f'--oem 3 --psm {psm}'
             data = pytesseract.image_to_data(img, output_type=Output.DICT, config=config)
-            word_data_list.extend(_extract_word_data(data, min_confidence))
+            word_data_list.extend(extractWord(data, min_confidence))
         except Exception as e:
             print(f"Error with PSM mode {psm}: {e}")
             continue
     
     return word_data_list
 
-def _extract_word_data(data, min_confidence):
+def extractWord(data, min_confidence):
     """Extract word data from OCR results"""
     word_data_list = []
     n_boxes = len(data['text'])
@@ -108,7 +108,7 @@ def _extract_word_data(data, min_confidence):
     
     return word_data_list
 
-def _merge_duplicate_boxes(word_data_list):
+def mergeDuplicateBoxes(word_data_list):
     """Merge overlapping or duplicate text boxes"""
     if not word_data_list:
         return []
@@ -126,7 +126,7 @@ def _merge_duplicate_boxes(word_data_list):
         # Check if this position overlaps significantly with any existing box
         is_duplicate = False
         for used_pos in used_positions:
-            if _boxes_overlap(pos_key, used_pos):
+            if boxOverlap(pos_key, used_pos):
                 is_duplicate = True
                 break
         
@@ -136,7 +136,7 @@ def _merge_duplicate_boxes(word_data_list):
     
     return merged_list
 
-def _boxes_overlap(box1, box2, threshold=0.7):
+def boxOverlap(box1, box2, threshold=0.7):
     """Check if two boxes overlap significantly"""
     left1, top1, width1, height1 = box1
     left2, top2, width2, height2 = box2
