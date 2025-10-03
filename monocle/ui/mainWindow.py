@@ -1,8 +1,6 @@
-import sys
 from PySide6 import QtCore, QtWidgets, QtGui
 from ..utils import commonHelpers as ch
 from ..core import ocrService as ocs
-from ..utils import imageUtils
 from ..utils.iconUtils import imgToIcon
 from .imageWidget import ResizableImageWidget
 from .notification import NotificationPopup
@@ -136,6 +134,10 @@ class mainWindow(QtWidgets.QWidget):
         
         # Show completion notification
         self.notification.showMessage("✓ OCR Complete!", 2000)
+
+    def checkWindowSystem():
+        if os.environ.get("WAYLAND_DISPLAY"):
+            raise ch.waylandErr
 
     def createOCRBoxes(self, extracted_word_boxes):
         """Create text boxes for OCR results"""

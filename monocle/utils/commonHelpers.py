@@ -20,3 +20,4 @@ def copySelectedText(imageWidget, notification):
             notification.showMessage("✓ Copied to clipboard!")
         else:
             notification.showMessage("⚠ No text selected!")
+
