@@ -5,6 +5,11 @@ from ..utils import imageUtils
 
 def runApp():
     """Create and run the main application"""
+    try:
+        mainWindow.checkWindowSystem()
+    except Exception as e:
+        print(e)
+
     app = QtWidgets.QApplication(sys.argv)
 
     primaryScreen = app.primaryScreen()

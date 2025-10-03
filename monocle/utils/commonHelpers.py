@@ -21,3 +21,7 @@ def copySelectedText(imageWidget, notification):
         else:
             notification.showMessage("⚠ No text selected!")
 
+class waylandErr():
+    print("This environment uses Wayland as its display server. Wayland does not have a native tool/library, and instead screenshotting and recording is managed by the DE/WM. Therefore, Wayland is currently not supported.")
+    exit()
+
